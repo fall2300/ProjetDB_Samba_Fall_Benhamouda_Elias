@@ -31,8 +31,6 @@
 ## Gestion des succès (Achievements) :
  Chaque jeu propose une liste de succès ou trophées (nom, description de l'objectif). Le système enregistre la date et l'heure exactes de déblocage de chaque succès par un utilisateur.
 
-## 2. Dictionnaire de données brutes (Intégrant les 3 thématiques)
-## 2. Dictionnaire de données brutes (Intégrant les 3 thématiques)
 
 ## 2. Dictionnaire de données brutes (34 données)
 
