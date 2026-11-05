@@ -1,3 +1,5 @@
+USE magasin;
+
 CREATE TABLE Utilisateur(
    u_id INT,
    u_pseudo VARCHAR(50),
@@ -80,7 +82,7 @@ CREATE TABLE Catégoriser(
 CREATE TABLE Evaluer(
    u_id INT,
    j_id INT,
-   ev_note BYTE,
+   ev_note INT,
    ev_review VARCHAR(1000),
    ev_date DATE,
    PRIMARY KEY(u_id, j_id),
