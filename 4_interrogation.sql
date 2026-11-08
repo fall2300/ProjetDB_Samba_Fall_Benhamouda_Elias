@@ -1,27 +1,36 @@
-# Un trie selon le prix des jeux
+USE magasin;
+
+-- Recherche des jeux dont le prix est compris entre 10 et 20 euros.
+-- Données recherchées : titre, description et prix du jeu.
 
 select j_titre,j_description,j_prix 
 from Jeu 
 WHERE j_prix Between 10 and 20 ; 
 
+-- Va permettre de trier les jeux par leur genre.
+-- Données recherchées : titre du jeu, description du jeu et nom du genre du jeu vidéo.
 
-# les jeu trier par genre
 SELECT J.j_titre,J.j_description,G.g_nom
 from Jeu J 
 inner join Catégoriser C on J.j_id=C.J_id
 inner join Genre G on G.g_id =C.g_id
 Order by g_nom ASC ;
 
-
-# historique de commande de l'utilisateur en commande 
+-- Cette commande va permettre de consulter l'historique des commandes d'un utilisateur.
+-- Données recherchées : pseudo de l'utilisateur, titre du jeu, date de commande et prix total de la commande.
 
 Select U.u_pseudo,U.u_email,J.j_titre,C.c_date_heure,C.c_prix_total
 from Utilisateur U 
 join commande C on  U.u_id= C.u_id 
 join Composer Co on C.c_id = Co.c_id
+join Jeu J on Co.J_id =J.j_id;Select U.u_pseudo,U.u_email,J.j_titre,C.c_date_heure,C.c_prix_total
+from Utilisateur U 
+join commande C on  U.u_id= C.u_id 
+join Composer Co on C.c_id = Co.c_id
 join Jeu J on Co.J_id =J.j_id;
 
-# Un requete qui le nombre joueur que le pays a commandé 
+-- Cette requête permet à la plateforme de connaître le nombre total d'utilisateurs par pays.
+-- Données recherchées : nom du pays de l'utilisateur et nombre total de joueurs par pays.
 
 SELECT U.u_pays, COUNT(U.u_id) AS nb_joueurs
 FROM Utilisateur U
@@ -29,20 +38,74 @@ GROUP BY U.u_pays
 ORDER BY nb_joueurs DESC;
 
 
-# Une requete qui affiche la liste de souhait du utilisateur 
-#Select  J.j_titre 
+-- Cette requête permet d'afficher la liste de souhaits des utilisateurs.
+-- Données recherchées : pseudo de l'utilisateur et titre des jeux présents dans sa liste de souhaits.
 
-# Le nombre de joeur un jeux précis par pays 
-
-# Le pourcentage de succée débloqué par moyenne par jeux
-
-# La note moyenne par jeux 
-
-# Le succée le plus rare débloquer par jeux
+SELECT U.u_pseudo, J.j_titre
+FROM Utilisateur U
+INNER JOIN Liste_de_souhaits S ON U.u_id = S.u_id
+INNER JOIN Jeu J ON S.j_id = J.j_id
+ORDER BY U.u_pseudo ASC, J.j_titre ASC;
 
 
 
+# Le nombre de joeur jouant à ce  jeux  par pays 
+SELECT J.j_titre, U.u_pays,
+       COUNT(U.u_id) AS nb_joueurs
+FROM Jeu J
+INNER JOIN Posséder P ON J.j_id = P.j_id
+INNER JOIN Utilisateur U ON P.u_id = U.u_id
+GROUP BY J.j_id, J.j_titre, U.u_pays
+ORDER BY nb_joueurs DESC;
 
+-- Cette requête permet de connaître le nombre de joueurs possédant chaque jeu par pays.
+-- Données recherchées : titre du jeu, pays des utilisateurs et nombre de joueurs par pays.
+
+SELECT J.j_titre,
+     ROUND(AVG(
+    (SELECT COUNT(*) * 100.0
+     FROM Débloquer D
+     INNER JOIN Succès S ON D.s_id = S.s_id
+     WHERE D.u_id = P.u_id
+     AND S.j_id = J.j_id)
+    /
+    (SELECT COUNT(*)
+     FROM Succès S2
+     WHERE S2.j_id = J.j_id)
+), 1) AS pourcentage_moyen
+FROM Posséder P
+INNER JOIN Jeu J ON P.j_id = J.j_id
+GROUP BY J.j_id, J.j_titre;
+
+
+--  Cette requête permet d'avoir la note moyenne d'un jeux
+-- Données recherchées : titre du jeu et note du jeu 
+
+SELECT J.j_titre,
+       ROUND(AVG(E.ev_note), 2) AS note_moyenne
+FROM Jeu J
+INNER JOIN Evaluer E ON J.j_id = E.j_id
+GROUP BY J.j_id, J.j_titre
+ORDER BY note_moyenne DESC;
+
+-- Cette requête permet d'identifier le succès le plus rarement débloqué pour chaque jeu.
+-- Données recherchées : titre du jeu, nom du succès et nombre de joueurs ayant débloqué ce succès.
+
+SELECT titre, succes, nb_joueurs
+FROM (
+    SELECT J.j_titre AS titre,
+           S.s_nom AS succes,
+           COUNT(D.u_id) AS nb_joueurs,
+           ROW_NUMBER() OVER (
+               PARTITION BY J.j_id
+               ORDER BY COUNT(D.u_id) ASC, S.s_id ASC
+           ) AS classement
+    FROM Jeu J
+    INNER JOIN Succès S ON J.j_id = S.j_id
+    INNER JOIN Débloquer D ON S.s_id = D.s_id
+    GROUP BY J.j_id, S.s_id, J.j_titre, S.s_nom
+) AS classement_succes
+WHERE classement = 1;
  
 
 
