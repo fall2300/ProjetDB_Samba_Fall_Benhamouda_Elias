@@ -22,5 +22,5 @@ ALTER TABLE Utilisateur
 ALTER TABLE Editeur
     MODIFY ed_pays Varchar (50) DEFAULT "France"; 
 
-    
+		
     
