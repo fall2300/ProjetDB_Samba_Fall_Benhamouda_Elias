@@ -111,7 +111,7 @@ ORDER BY note_moyenne DESC;
 		) AS t
 	);
 
-	-- Cette requête permet d'obtenir liste des succès débloquer pour tous les joueurs
+	-- Cette requête permet d'obtenir liste des succès débloquer pour tous les joueurs.
     
     SELECT 
     u.u_pseudo, 
@@ -125,5 +125,62 @@ JOIN Succès s ON d.s_id = s.s_id
 JOIN Jeu j ON s.j_id = j.j_id
 ORDER BY u.u_id, d.d_date;
 
+	-- Cette requête permet d'btenir le classement des jeux les plus venus de la plateforme.
+SELECT 
+    j.j_id, 
+    j.j_titre, 
+    COUNT(p.u_id) AS total_possessions
+FROM Jeu j
+LEFT JOIN Posséder p ON j.j_id = p.j_id
+GROUP BY j.j_id, j.j_titre
+ORDER BY total_possessions DESC;
+
+	-- Cette requête permet d'obtenir le jeu le plus populaire par éditeur.
+SELECT 
+    e.ed_nom, 
+    j.j_titre, 
+    COUNT(c.c_id) AS nb_ventes
+FROM Editeur e
+JOIN Editer ed ON e.ed_id = ed.ed_id
+JOIN Jeu j ON ed.j_id = j.j_id
+LEFT JOIN Composer c ON j.j_id = c.j_id
+GROUP BY e.ed_id, e.ed_nom, j.j_id, j.j_titre
+HAVING COUNT(c.c_id) = (
+    SELECT MAX(sub_ventes)
+    FROM (
+        SELECT COUNT(c2.c_id) AS sub_ventes
+        FROM Editer ed2
+        JOIN Jeu j2 ON ed2.j_id = j2.j_id
+        LEFT JOIN Composer c2 ON j2.j_id = c2.j_id
+        WHERE ed2.ed_id = e.ed_id
+        GROUP BY j2.j_id
+    ) AS t
+);
+
+	-- Cette requête permet d'obtenir la liste des utilisateurs n'ayant jamais acheté de jeu sur la plateforme.
+SELECT 
+    u.u_id, 
+    u.u_pseudo, 
+    u.u_email
+FROM Utilisateur u
+LEFT JOIN Posséder p ON u.u_id = p.u_id
+WHERE p.j_id IS NULL;
 
 
+	-- Cette requête permet d'afficher la liste des jeux n'ayant aucune évaluation.
+SELECT 
+    j.j_id, 
+    j.j_titre
+FROM Jeu j
+LEFT JOIN Evaluer e ON j.j_id = e.j_id
+WHERE e.u_id IS NULL;
+
+	-- Cette requête permet d'obtenir le temps de jeu moyen par jeu. 
+SELECT 
+    j.j_id, 
+    j.j_titre, 
+    ROUND(AVG(p.tps_jeu), 2) AS temps_jeu_moyen_heures
+FROM Jeu j
+JOIN Posséder p ON j.j_id = p.j_id
+GROUP BY j.j_id, j.j_titre
+ORDER BY temps_jeu_moyen_heures DESC;
