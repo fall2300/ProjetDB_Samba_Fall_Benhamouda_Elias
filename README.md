@@ -157,3 +157,30 @@ La plateforme souhaite connaître le niveau moyen de progression des joueurs dan
 La plateforme peut identifier les succès les plus difficiles à obtenir pour chaque jeu. Cette requête permet de déterminer le succès débloqué par le plus petit nombre de joueurs. En cas d'égalité, un seul succès est sélectionné. Cela permet aux joueurs de découvrir les succès les plus rares et de connaître leur niveau de rareté.
 
 
+
+### Analyse exécution : 
+
+**Contexte** :La requête qui fut choisie est la requête sur la moyenne des notes des jeux du cas d'utilisation 7.
+
+### Plans 1 : Jointure puis agrégation
+Dans le premier plan, nous effectuons d'abord une jointure entre les relations Jeu et Evaluer sur l'identifiant du jeu. Nous procédons ensuite au regroupement des évaluations par jeu afin de calculer la moyenne des notes.
+
+La jointure produit 70 lignes, qui sont ensuite regroupées pour obtenir 35 lignes. Le résultat est finalement projeté et trié par moyenne décroissante.
+
+![alt text](image-4.png)
+
+#### Plans 2 : Agrégation puis jointure 
+![alt text](image-2.png)
+
+Dans le deuxième plan, nous commençons par regrouper les évaluations selon l'identifiant du jeu afin de calculer directement une moyenne pour chaque jeu. Cette opération réduit les 70 lignes initiales de la relation Evaluer à 35 lignes.
+
+Nous effectuons ensuite la jointure avec la relation Jeu, qui contient 35 lignes. Le résultat de cette jointure comporte 35 lignes. Nous conservons ensuite le titre et la moyenne des notes avant de procéder au tri.
+
+
+#### Comparaison et choix du meilleur plan
+
+Les deux permettent d'obtenir le même résultat final. Cependant, le deuxième plan présente un avantage : la jointure est effectuée après l'agrégation des évaluations.
+
+Le premier plan produit 70 lignes lors de la jointure, tandis que le deuxième n'en produit que 35. Le deuxième plan limite donc le nombre de lignes intermédiaires manipulées lors de cette opération.
+
+Nous retenons ainsi le deuxième plan comme étant le plus intéressant en matière de réduction des données intermédiaires, même si le coût réel dépend également des algorithmes utilisés pour effectuer les jointures et les agrégations.
