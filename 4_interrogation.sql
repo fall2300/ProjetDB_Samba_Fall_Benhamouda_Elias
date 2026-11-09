@@ -112,7 +112,7 @@ ORDER BY note_moyenne DESC;
 	);
 
 	-- Cette requête permet d'obtenir liste des succès débloquer pour tous les joueurs.
-    
+    -- Données recherchées : pseudo, titre du jeu, nom du succès, description du succès, date d'obtention.    
     SELECT 
     u.u_pseudo, 
     j.j_titre, 
@@ -125,7 +125,8 @@ JOIN Succès s ON d.s_id = s.s_id
 JOIN Jeu j ON s.j_id = j.j_id
 ORDER BY u.u_id, d.d_date;
 
-	-- Cette requête permet d'btenir le classement des jeux les plus venus de la plateforme.
+	-- Cette requête permet d'obtenir le classement des jeux les plus venus de la plateforme.
+    -- Données recherchées: id du jeu, titre du jeu, nombre total d'achat.
 SELECT 
     j.j_id, 
     j.j_titre, 
@@ -136,6 +137,7 @@ GROUP BY j.j_id, j.j_titre
 ORDER BY total_possessions DESC;
 
 	-- Cette requête permet d'obtenir le jeu le plus populaire par éditeur.
+    -- Données recherchéees: Nom de l'éditeur, titre du jeu, nombre de ventes
 SELECT 
     e.ed_nom, 
     j.j_titre, 
@@ -158,6 +160,7 @@ HAVING COUNT(c.c_id) = (
 );
 
 	-- Cette requête permet d'obtenir la liste des utilisateurs n'ayant jamais acheté de jeu sur la plateforme.
+    -- id, pseudo, email de l'utilisateur
 SELECT 
     u.u_id, 
     u.u_pseudo, 
@@ -168,6 +171,7 @@ WHERE p.j_id IS NULL;
 
 
 	-- Cette requête permet d'afficher la liste des jeux n'ayant aucune évaluation.
+    -- Données recherchées: id et titre du jeu
 SELECT 
     j.j_id, 
     j.j_titre
@@ -176,6 +180,7 @@ LEFT JOIN Evaluer e ON j.j_id = e.j_id
 WHERE e.u_id IS NULL;
 
 	-- Cette requête permet d'obtenir le temps de jeu moyen par jeu. 
+    -- Données recherchées: id et titre du jeu, temps de jeu moyen.
 SELECT 
     j.j_id, 
     j.j_titre, 
