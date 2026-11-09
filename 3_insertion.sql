@@ -1,9 +1,10 @@
+-- Script SQL d'insertion de données complet, cohérent et synchronisé (Achats <-> Possessions)
 
 -- ==========================================
 -- 1. TABLES SANS CLÉS ÉTRANGÈRES
 -- ==========================================
 
--- Insertion des 22 éditeurs réels
+-- Insertion des 22 éditeurs
 INSERT INTO Editeur (ed_id, ed_nom, ed_pays) VALUES
 (1, 'CD Projekt', 'Pologne'),
 (2, 'Larian Studios', 'Belgique'),
@@ -151,7 +152,7 @@ INSERT INTO Succès (s_id, s_nom, s_desc, j_id) VALUES
 (20, 'Maître de la guilde', 'Devenir chef de la Guilde des Voleurs', 13),
 (21, 'Explorateur stellaire', 'Visiter 50 systèmes solaires différents', 14),
 (22, 'Constellation', 'Rejoindre le groupe d exploration Constellation', 14),
-(23, 'Seigneur des Cendres', 'Vaincre les Seigneurs des Cendres', 15),
+(23, 'Seigneur des Cendres', 'Vaincre le Seigneur des Cendres', 15),
 (24, 'Maître de l épée', 'Apprendre toutes les techniques de combat', 16),
 (25, 'Maître du monde', 'Remporter une victoire scientifique dans Civ VI', 17),
 (26, 'Mégapole florissante', 'Accueillir 100 000 citoyens', 18),
@@ -180,7 +181,7 @@ INSERT INTO Succès (s_id, s_nom, s_desc, j_id) VALUES
 (49, 'Collectionneur légendaire', 'Trouver toutes les armes légendaires', 4),
 (50, 'Tir de précision', 'Réussir 50 tirs à la tête en VR', 5),
 (51, 'Génie du puzzle', 'Résoudre les salles de test avancées', 6),
-(52, 'Roi du crime', 'Contrôler tous les commerce illégaux', 7),
+(52, 'Roi du crime', 'Contrôler tous les commerces illégaux', 7),
 (53, 'As du rodéo', 'Dompter un cheval sauvage rare', 8),
 (54, 'Conquérant viking', 'Conquérir tous les territoires saxons', 9),
 (55, 'Artiste guérillero', 'Améliorer toutes les armes de la rébellion', 10),
@@ -192,41 +193,11 @@ INSERT INTO Succès (s_id, s_nom, s_desc, j_id) VALUES
 
 -- Insertion de la table Editer
 INSERT INTO Editer (ed_id, j_id) VALUES
-(1, 1),   -- Cyberpunk 2077 est édité par CD Projekt
-(1, 2),   -- The Witcher 3 est édité par CD Projekt
-(2, 3),   -- Baldur Gate 3 est édité par Larian Studios
-(3, 4),   -- Elden Ring est édité par FromSoftware
-(4, 5),   -- Half-Life: Alyx est édité par Valve
-(4, 6),   -- Portal 2 est édité par Valve
-(5, 7),   -- Grand Theft Auto V est édité par Rockstar Games
-(5, 8),   -- Red Dead Redemption 2 est édité par Rockstar Games
-(6, 9),   -- Assassin Creed Valhalla est édité par Ubisoft
-(6, 10),  -- Far Cry 6 est édité par Ubisoft
-(7, 11),  -- Resident Evil 4 Remake est édité par Capcom
-(7, 12),  -- Monster Hunter: World est édité par Capcom
-(8, 13),  -- Skyrim est édité par Bethesda Softworks
-(8, 14),  -- Starfield est édité par Bethesda Softworks
-(3, 15),  -- Dark Souls III est édité par FromSoftware
-(3, 16),  -- Sekiro: Shadows Die Twice est édité par FromSoftware
-(19, 17), -- Civilization VI est édité par 2K Games
-(9, 18),  -- Cities: Skylines est édité par Paradox Interactive
-(10, 19), -- EA Sports FC 24 est édité par EA Sports
-(10, 20), -- F1 23 est édité par EA Sports
-(11, 21), -- Hades est édité par Supergiant Games
-(12, 22), -- Katana Zero est édité par Ysbryd Games
-(13, 23), -- Terraria est édité par Re-Logic
-(14, 24), -- Stardew Valley est édité par ConcernedApe
-(15, 25), -- Subnautica est édité par Unknown Worlds Entertainment
-(16, 26), -- Dead Cells est édité par Motion Twin
-(17, 27), -- Hollow Knight est édité par Team Cherry
-(8, 28),  -- Doom Eternal est édité par Bethesda Softworks
-(18, 29), -- God of War est édité par Sony Interactive Entertainment
-(18, 30), -- Horizon Zero Dawn est édité par Sony Interactive Entertainment
-(21, 31), -- Detroit: Become Human est édité par Quantic Dream
-(22, 32), -- Death Stranding est édité par Kojima Productions
-(20, 33), -- It Takes Two est édité par Hazelight Studios
-(10, 34), -- Battlefield 2042 est édité par EA Sports
-(6, 35);  -- Anno 1800 est édité par Ubisoft
+(1, 1), (1, 2), (2, 3), (3, 4), (4, 5), (4, 6), (5, 7), (5, 8),
+(6, 9), (6, 10), (7, 11), (7, 12), (8, 13), (8, 14), (3, 15),
+(3, 16), (19, 17), (9, 18), (10, 19), (10, 20), (11, 21), (12, 22),
+(13, 23), (14, 24), (15, 25), (16, 26), (17, 27), (8, 28), (18, 29),
+(18, 30), (21, 31), (22, 32), (20, 33), (10, 34), (6, 35);
 
 -- Insertion de la table Catégoriser
 INSERT INTO Catégoriser (j_id, g_id) VALUES
@@ -271,7 +242,7 @@ INSERT INTO Catégoriser (j_id, g_id) VALUES
 -- 3. TABLES AVEC CLÉS ÉTRANGÈRES DE NIVEAU 2+
 -- ==========================================
 
--- Insertion des Commandes (35 commandes, 1 par utilisateur)
+-- Insertion des Commandes (Chaque utilisateur passe au moins une commande de base)
 INSERT INTO Commande (c_id, c_date_heure, c_prix_total, c_mode_paiement, u_id) VALUES
 (1, '2023-01-16 14:20:00', 59.99, 'Carte bancaire', 1),
 (2, '2023-02-21 10:15:00', 39.99, 'PayPal', 2),
@@ -307,58 +278,108 @@ INSERT INTO Commande (c_id, c_date_heure, c_prix_total, c_mode_paiement, u_id) V
 (32, '2024-07-13 16:45:00', 39.99, 'PayPal', 32),
 (33, '2024-07-21 19:20:00', 39.99, 'Carte bancaire', 33),
 (34, '2024-08-02 08:50:00', 39.99, 'Carte bancaire', 34),
-(35, '2024-08-11 22:00:00', 49.99, 'PayPal', 35);
+(35, '2024-08-11 22:00:00', 49.99, 'PayPal', 35),
+-- Commandes supplémentaires pour alimenter les bibliothèques riches des utilisateurs 1 à 5
+(36, '2023-01-18 10:00:00', 39.99, 'Carte bancaire', 1),
+(37, '2023-01-20 11:00:00', 59.99, 'PayPal', 1),
+(38, '2023-02-22 12:00:00', 29.99, 'Carte bancaire', 2),
+(39, '2023-02-25 14:00:00', 59.99, 'PayPal', 2),
+(40, '2023-03-12 09:00:00', 49.99, 'Carte bancaire', 3),
+(41, '2023-03-15 15:00:00', 9.99, 'PayPal', 3),
+(42, '2023-04-08 10:00:00', 39.99, 'Carte bancaire', 4),
+(43, '2023-04-10 16:00:00', 59.99, 'PayPal', 4),
+(44, '2023-05-14 11:00:00', 29.99, 'Carte bancaire', 5),
+(45, '2023-05-15 17:00:00', 59.99, 'PayPal', 5);
 
--- Insertion de la table Composer
+-- Insertion de la table Composer (Liaison stricte entre Commandes et Jeux)
 INSERT INTO Composer (c_id, j_id) VALUES
+-- Commandes de base (1 à 35)
 (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8),
 (9, 9), (10, 10), (11, 11), (12, 12), (13, 13), (14, 14), (15, 15),
 (16, 16), (17, 17), (18, 18), (19, 19), (20, 20), (21, 21), (22, 22),
 (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29),
-(30, 30), (31, 31), (32, 32), (33, 33), (34, 34), (35, 35);
+(30, 30), (31, 31), (32, 32), (33, 33), (34, 34), (35, 35),
+-- Commandes supplémentaires (36 à 45) pour alimenter les bibliothèques riches
+(36, 2), (37, 4), 
+(38, 4), (39, 13), 
+(40, 1), (41, 6), 
+(42, 2), (43, 3), 
+(44, 1), (45, 4);
 
--- Insertion de la table Posséder (Bibliothèque)
+-- Insertion de la table Posséder (Bibliothèques synchronisées exactement avec les commandes des utilisateurs)
 INSERT INTO Posséder (u_id, j_id, date_acquisition_jeu, drm, tps_jeu) VALUES
+-- Utilisateur 1 (7 jeux commandés & possédés)
 (1, 1, '2023-01-16', 'DRM-STEAM-001', 120.5),
-(2, 2, '2023-02-21', 'DRM-GOG-002', 250.0),
-(3, 3, '2023-03-11', 'DRM-STEAM-003', 85.0),
-(4, 4, '2023-04-06', 'DRM-STEAM-004', 160.2),
-(5, 5, '2023-05-13', 'DRM-STEAM-005', 12.0),
-(6, 6, '2023-06-19', 'DRM-STEAM-006', 25.4),
-(7, 7, '2023-07-02', 'DRM-ROCKSTAR-007', 95.8),
-(8, 8, '2023-08-23', 'DRM-ROCKSTAR-008', 110.0),
-(9, 9, '2023-09-15', 'DRM-UBI-009', 45.0),
-(10, 10, '2023-10-31', 'DRM-UBI-010', 30.5),
-(11, 11, '2023-11-03', 'DRM-STEAM-011', 18.2),
-(12, 12, '2023-11-16', 'DRM-STEAM-012', 75.0),
-(13, 13, '2023-12-02', 'DRM-STEAM-013', 300.0),
-(14, 14, '2023-12-11', 'DRM-STEAM-014', 42.1),
-(15, 15, '2024-01-06', 'DRM-STEAM-015', 65.4),
-(16, 16, '2024-01-21', 'DRM-STEAM-016', 55.0),
-(17, 17, '2024-02-12', 'DRM-STEAM-017', 120.0),
-(18, 18, '2024-02-26', 'DRM-STEAM-018', 80.3),
-(19, 19, '2024-03-04', 'DRM-EA-019', 40.0),
-(20, 20, '2024-03-15', 'DRM-EA-020', 22.5),
-(21, 21, '2024-03-23', 'DRM-STEAM-021', 48.9),
-(22, 22, '2024-04-02', 'DRM-STEAM-022', 35.1),
-(23, 23, '2024-04-11', 'DRM-STEAM-023', 200.0),
-(24, 24, '2024-04-16', 'DRM-STEAM-024', 90.4),
-(25, 25, '2024-05-02', 'DRM-STEAM-025', 50.0),
-(26, 26, '2024-05-13', 'DRM-EPIC-026', 45.0),
-(27, 27, '2024-05-21', 'DRM-STEAM-027', 32.0),
-(28, 28, '2024-06-02', 'DRM-STEAM-028', 15.6),
-(29, 29, '2024-06-16', 'DRM-STEAM-029', 35.0),
-(30, 30, '2024-06-29', 'DRM-STEAM-030', 28.7),
-(31, 31, '2024-07-06', 'DRM-EPIC-031', 14.2),
-(32, 32, '2024-07-13', 'DRM-STEAM-032', 60.1),
-(33, 33, '2024-07-21', 'DRM-EA-033', 10.0),
-(34, 34, '2024-08-02', 'DRM-EA-034', 88.4),
-(35, 35, '2024-08-11', 'DRM-UBI-035', 77.2),
-(1, 2, '2023-02-01', 'DRM-GOG-036', 150.0),
-(2, 3, '2023-03-15', 'DRM-STEAM-037', 90.0),
-(3, 4, '2023-04-10', 'DRM-STEAM-038', 200.0),
-(4, 13, '2023-05-01', 'DRM-STEAM-039', 110.0),
-(5, 26, '2023-06-01', 'DRM-STEAM-040', 45.0);
+(1, 2, '2023-01-18', 'DRM-GOG-002', 250.0),
+(1, 3, '2023-01-16', 'DRM-STEAM-003', 85.0),
+(1, 4, '2023-01-20', 'DRM-STEAM-004', 160.2),
+(1, 5, '2023-05-13', 'DRM-STEAM-041', 35.0),
+(1, 6, '2023-06-19', 'DRM-STEAM-042', 20.0),
+(1, 7, '2023-07-02', 'DRM-ROCKSTAR-005', 95.8),
+
+-- Utilisateur 2 (6 jeux commandés & possédés)
+(2, 2, '2023-02-21', 'DRM-GOG-006', 300.0),
+(2, 4, '2023-02-25', 'DRM-STEAM-007', 210.0),
+(2, 5, '2023-05-13', 'DRM-STEAM-043', 15.0),
+(2, 6, '2023-06-19', 'DRM-STEAM-044', 18.5),
+(2, 7, '2023-07-02', 'DRM-ROCKSTAR-045', 45.0),
+(2, 13, '2023-02-22', 'DRM-STEAM-008', 140.5),
+
+-- Utilisateur 3 (6 jeux commandés & possédés)
+(3, 1, '2023-03-12', 'DRM-STEAM-047', 50.0),
+(3, 2, '2023-02-21', 'DRM-GOG-048', 80.0),
+(3, 3, '2023-03-11', 'DRM-STEAM-009', 45.0),
+(3, 5, '2023-05-13', 'DRM-STEAM-049', 10.0),
+(3, 6, '2023-03-15', 'DRM-STEAM-050', 12.0),
+(3, 7, '2023-07-02', 'DRM-ROCKSTAR-051', 30.0),
+
+-- Utilisateur 4 (6 jeux commandés & possédés)
+(4, 1, '2023-05-13', 'DRM-STEAM-052', 40.0),
+(4, 2, '2023-02-21', 'DRM-GOG-053', 90.0),
+(4, 3, '2023-04-10', 'DRM-STEAM-054', 55.0),
+(4, 4, '2023-04-06', 'DRM-STEAM-010', 12.0),
+(4, 5, '2023-05-13', 'DRM-STEAM-055', 14.0),
+(4, 6, '2023-06-19', 'DRM-STEAM-056', 22.0),
+
+-- Utilisateur 5 (6 jeux commandés & possédés)
+(5, 1, '2023-05-14', 'DRM-STEAM-057', 35.0),
+(5, 3, '2023-03-11', 'DRM-STEAM-058', 40.0),
+(5, 4, '2023-05-15', 'DRM-STEAM-059', 75.0),
+(5, 5, '2023-05-13', 'DRM-STEAM-011', 8.5),
+(5, 6, '2023-06-19', 'DRM-STEAM-060', 15.0),
+(5, 7, '2023-07-02', 'DRM-ROCKSTAR-061', 25.0),
+
+-- Autres utilisateurs (1 jeu possédé correspondant à leur commande respective de 6 à 35)
+(6, 6, '2023-06-19', 'DRM-STEAM-012', 15.0),
+(7, 7, '2023-07-02', 'DRM-ROCKSTAR-013', 50.0),
+(8, 8, '2023-08-23', 'DRM-ROCKSTAR-014', 75.2),
+(9, 9, '2023-09-15', 'DRM-UBI-015', 20.0),
+(10, 10, '2023-10-31', 'DRM-UBI-016', 10.0),
+(11, 11, '2023-11-03', 'DRM-STEAM-017', 18.2),
+(12, 12, '2023-11-16', 'DRM-STEAM-018', 35.0),
+(13, 13, '2023-12-02', 'DRM-STEAM-019', 90.0),
+(14, 14, '2023-12-11', 'DRM-STEAM-020', 22.1),
+(15, 15, '2024-01-06', 'DRM-STEAM-021', 40.4),
+(16, 16, '2024-01-21', 'DRM-STEAM-022', 25.0),
+(17, 17, '2024-02-12', 'DRM-STEAM-023', 60.0),
+(18, 18, '2024-02-26', 'DRM-STEAM-024', 30.3),
+(19, 19, '2024-03-04', 'DRM-EA-025', 15.0),
+(20, 20, '2024-03-15', 'DRM-EA-026', 12.5),
+(21, 21, '2024-03-23', 'DRM-STEAM-027', 48.9),
+(22, 22, '2024-04-02', 'DRM-STEAM-028', 14.1),
+(23, 23, '2024-04-11', 'DRM-STEAM-029', 100.0),
+(24, 24, '2024-04-16', 'DRM-STEAM-030', 50.4),
+(25, 25, '2024-05-02', 'DRM-STEAM-031', 25.0),
+(26, 26, '2024-05-13', 'DRM-EPIC-032', 20.0),
+(27, 27, '2024-05-21', 'DRM-STEAM-033', 32.0),
+(28, 28, '2024-06-02', 'DRM-STEAM-034', 15.6),
+(29, 29, '2024-06-16', 'DRM-STEAM-035', 35.0),
+(30, 30, '2024-06-29', 'DRM-STEAM-036', 28.7),
+(31, 31, '2024-07-06', 'DRM-EPIC-037', 14.2),
+(32, 32, '2024-07-13', 'DRM-STEAM-038', 40.1),
+(33, 33, '2024-07-21', 'DRM-EA-039', 10.0),
+(34, 34, '2024-08-02', 'DRM-EA-040', 30.4),
+(35, 35, '2024-08-11', 'DRM-UBI-041', 25.2);
 
 -- Insertion de la table Liste_de_souhaits
 INSERT INTO Liste_de_souhaits (u_id, j_id, w_date) VALUES
@@ -390,76 +411,76 @@ INSERT INTO Liste_de_souhaits (u_id, j_id, w_date) VALUES
 
 -- Insertion de la table Evaluer
 INSERT INTO Evaluer (u_id, j_id, ev_note, ev_review, ev_date) VALUES
-(1, 1, 16, 'Très bon jeu malgré quelques bugs à la sortie.', '2023-01-20'),
-(2, 1, 18, 'Immersion totale, un chef-d œuvre cyberpunk.', '2023-02-25'),
-(2, 2, 20, 'Le meilleur RPG de tous les temps.', '2023-03-01'),
-(5, 2, 19, 'Scénario et quêtes secondaires incroyables.', '2023-05-20'),
-(3, 3, 19, 'Une liberté d action jamais vue dans un jeu de rôle.', '2023-03-20'),
-(10, 3, 18, 'Génial en coop avec des amis.', '2023-11-10'),
-(4, 4, 20, 'Une claque monumentale et gratifiante.', '2023-04-10'),
+(1, 1, 16, 'Très bon jeu malgré quelques bugs.', '2023-01-20'),
+(2, 1, 18, 'Immersion totale, chef-d œuvre.', '2023-02-25'),
+(1, 2, 20, 'Le meilleur RPG.', '2023-02-01'),
+(5, 2, 19, 'Scénario incroyable.', '2023-05-20'),
+(3, 3, 19, 'Liberté d action totale.', '2023-03-20'),
+(10, 3, 18, 'Génial en coop.', '2023-11-10'),
+(4, 4, 20, 'Une claque monumentale.', '2023-04-10'),
 (7, 4, 17, 'Magnifique mais exigeant.', '2023-07-05'),
-(5, 5, 18, 'La VR à son meilleur niveau.', '2023-05-15'),
+(5, 5, 18, 'La VR à son meilleur.', '2023-05-15'),
 (11, 5, 16, 'Très immersif.', '2023-11-05'),
-(6, 6, 19, 'Des énigmes diaboliques et un humour génial.', '2023-06-22'),
-(12, 6, 18, 'Un classique intemporel.', '2023-11-20'),
-(7, 7, 17, 'Monde ouvert vivant et très riche.', '2023-07-10'),
-(13, 7, 16, 'Encore très actif en ligne.', '2023-12-05'),
-(8, 8, 20, 'Une narration et une écriture hors du commun.', '2023-08-25'),
+(6, 6, 19, 'Énigmes et humour géniaux.', '2023-06-22'),
+(12, 6, 18, 'Classique intemporel.', '2023-11-20'),
+(7, 7, 17, 'Monde ouvert vivant.', '2023-07-10'),
+(13, 7, 16, 'Toujours actif.', '2023-12-05'),
+(8, 8, 20, 'Narration hors du commun.', '2023-08-25'),
 (14, 8, 19, 'Visuellement époustouflant.', '2023-12-15'),
-(9, 9, 14, 'Sympathique mais un peu répétitif.', '2023-09-18'),
-(15, 9, 15, 'Bon jeu d action historique.', '2024-01-10'),
-(10, 10, 13, 'Classique de la formule Ubisoft.', '2023-11-02'),
-(16, 10, 14, 'Divertissant pour passer le temps.', '2024-01-25'),
-(11, 11, 19, 'Le meilleur remake de survival horror.', '2023-11-04'),
-(17, 11, 18, 'Des frissons du début à la fin.', '2024-02-15'),
-(12, 12, 15, 'Du fun en multijoueur.', '2023-11-18'),
-(18, 12, 16, 'Chasser des monstres géants est addictif.', '2024-03-01'),
-(13, 13, 18, 'On y revient toujours après toutes ces années.', '2023-12-03'),
+(9, 9, 14, 'Sympathique mais répétitif.', '2023-09-18'),
+(15, 9, 15, 'Bon jeu d action.', '2024-01-10'),
+(10, 10, 13, 'Formule classique.', '2023-11-02'),
+(16, 10, 14, 'Divertissant.', '2024-01-25'),
+(11, 11, 19, 'Superbe remake.', '2023-11-04'),
+(17, 11, 18, 'Des frissons.', '2024-02-15'),
+(12, 12, 15, 'Fun en multijoueur.', '2023-11-18'),
+(18, 12, 16, 'Chasse addictive.', '2024-03-01'),
+(13, 13, 18, 'On y revient toujours.', '2023-12-03'),
 (19, 13, 17, 'Modable à l infini.', '2024-03-06'),
-(14, 14, 14, 'Un peu vide mais l exploration spatiale attire.', '2023-12-12'),
-(20, 14, 15, 'Potentiel énorme avec les futurs mods.', '2024-03-18'),
-(15, 15, 16, 'Un défi permanent.', '2024-01-08'),
-(21, 15, 17, 'Superbe direction artistique.', '2024-03-25'),
-(16, 16, 18, 'Le système de combat au katana est parfait.', '2024-01-22'),
-(22, 16, 19, 'Exigeant mais tellement jouissif à maîtriser.', '2024-04-03'),
-(17, 17, 17, 'Encore un tour de plus et il est 4h du matin.', '2024-02-14'),
-(23, 17, 16, 'Stratégie très complète.', '2024-04-12'),
-(18, 18, 17, 'Le digne successeur de SimCity.', '2024-02-28'),
-(24, 18, 18, 'Gestion urbaine très poussée.', '2024-04-18'),
-(19, 19, 12, 'Du réchauffé chaque année.', '2024-03-05'),
-(25, 19, 13, 'Bon pour jouer entre amis sur le canapé.', '2024-05-04'),
-(20, 20, 16, 'Les sensations de pilotage sont bonnes.', '2024-03-16'),
-(26, 20, 17, 'Immersif pour les fans de F1.', '2024-05-15'),
-(21, 21, 20, 'Un chef-d œuvre du jeu indépendant.', '2024-03-24'),
-(27, 21, 19, 'Musique et gameplay au top.', '2024-05-22'),
-(22, 22, 18, 'Action frénétique et plate-forme millimétrée.', '2024-04-03'),
-(28, 22, 17, 'Un style néon inoubliable.', '2024-06-03'),
-(23, 23, 18, 'Des centaines d heures de construction.', '2024-04-12'),
-(29, 23, 19, 'Incontournable du jeu bac à sable.', '2024-06-18'),
+(14, 14, 14, 'Exploration spatiale sympa.', '2023-12-12'),
+(20, 14, 15, 'Gros potentiel avec les mods.', '2024-03-18'),
+(15, 15, 16, 'Défi permanent.', '2024-01-08'),
+(21, 15, 17, 'Superbe DA.', '2024-03-25'),
+(16, 16, 18, 'Combat au katana parfait.', '2024-01-22'),
+(22, 16, 19, 'Exigeant et jouissif.', '2024-04-03'),
+(17, 17, 17, 'Encore un tour...', '2024-02-14'),
+(23, 17, 16, 'Stratégie complète.', '2024-04-12'),
+(18, 18, 17, 'Digne successeur.', '2024-02-28'),
+(24, 18, 18, 'Gestion poussée.', '2024-04-18'),
+(19, 19, 12, 'Annuel.', '2024-03-05'),
+(25, 19, 13, 'Bon entre amis.', '2024-05-04'),
+(20, 20, 16, 'Bonnes sensations.', '2024-03-16'),
+(26, 20, 17, 'Immersif pour les fans.', '2024-05-15'),
+(21, 21, 20, 'Chef-d œuvre indé.', '2024-03-24'),
+(27, 21, 19, 'Gameplay au top.', '2024-05-22'),
+(22, 22, 18, 'Action frénétique.', '2024-04-03'),
+(28, 22, 17, 'Style néon top.', '2024-06-03'),
+(23, 23, 18, 'Heures de construction.', '2024-04-12'),
+(29, 23, 19, 'Incontournable bac à sable.', '2024-06-18'),
 (24, 24, 17, 'Ultra relaxant.', '2024-04-17'),
-(30, 24, 18, 'Idéal pour se détendre après le travail.', '2024-07-01'),
-(25, 25, 16, 'L ambiance sous-marine est flippante et captivante.', '2024-05-03'),
-(31, 25, 15, 'Très bonne surprise.', '2024-07-08'),
-(26, 26, 20, 'Un metroidvania de génie.', '2024-05-14'),
-(32, 26, 19, 'Le meilleur jeu d action en 2D.', '2024-07-15'),
-(27, 27, 19, 'Une direction artistique et un level design parfaits.', '2024-05-22'),
-(33, 27, 18, 'Un défi exigeant et gratifiant.', '2024-07-22'),
-(28, 28, 17, 'De l action non-stop.', '2024-06-03'),
-(34, 28, 16, 'Exutoire parfait.', '2024-08-03'),
-(29, 29, 19, 'Une claque narrative et graphique.', '2024-06-17'),
-(35, 29, 18, 'Le duo Kratos et Atreus fonctionne à merveille.', '2024-08-12'),
-(30, 30, 16, 'Univers original et beaux panoramas.', '2024-06-30'),
+(30, 24, 18, 'Idéal pour décompresser.', '2024-07-01'),
+(25, 25, 16, 'Ambiance sous-marine.', '2024-05-03'),
+(31, 25, 15, 'Bonne surprise.', '2024-07-08'),
+(26, 26, 20, 'Metroidvania de génie.', '2024-05-14'),
+(32, 26, 19, 'Top en 2D.', '2024-07-15'),
+(27, 27, 19, 'Level design parfait.', '2024-05-22'),
+(33, 27, 18, 'Défi gratifiant.', '2024-07-22'),
+(28, 28, 17, 'Action non-stop.', '2024-06-03'),
+(34, 28, 16, 'Exutoire.', '2024-08-03'),
+(29, 29, 19, 'Claque narrative.', '2024-06-17'),
+(35, 29, 18, 'Duo Kratos/Atreus top.', '2024-08-12'),
+(30, 30, 16, 'Beaux panoramas.', '2024-06-30'),
 (1, 30, 15, 'Histoire intéressante.', '2023-01-25'),
-(31, 31, 17, 'Vos choix ont de vraies conséquences.', '2024-07-07'),
-(2, 31, 16, 'Très cinématographique.', '2023-03-02'),
-(32, 32, 15, 'Une expérience unique de livraison.', '2024-07-14'),
-(3, 32, 14, 'Un peu contemplatif mais fascinant.', '2023-03-12'),
-(33, 33, 19, 'Le meilleur jeu coopératif local.', '2024-07-22'),
-(4, 33, 18, 'On rigole du début à la fin.', '2023-04-08'),
-(34, 34, 13, 'Un lancement compliqué mais ça s améliore.', '2024-08-04'),
-(5, 34, 12, 'Des bugs persistants.', '2023-05-14'),
-(35, 35, 17, 'Complexe et addictif pour les amateurs de gestion.', '2024-08-12'),
-(6, 35, 18, 'Économie très bien modélisée.', '2023-06-20');
+(31, 31, 17, 'Choix importants.', '2024-07-07'),
+(2, 31, 16, 'Cinématographique.', '2023-03-02'),
+(32, 32, 15, 'Expérience unique.', '2024-07-14'),
+(3, 32, 14, 'Fascinant.', '2023-03-12'),
+(33, 33, 19, 'Top en coop.', '2024-07-22'),
+(4, 33, 18, 'Rigolo du début à la fin.', '2023-04-08'),
+(34, 34, 13, 'S améliore.', '2024-08-04'),
+(5, 34, 12, 'Quelques bugs.', '2023-05-14'),
+(35, 35, 17, 'Complexe et addictif.', '2024-08-12'),
+(6, 35, 18, 'Économie bien gérée.', '2023-06-20');
 
 -- Insertion de la table Débloquer
 INSERT INTO Débloquer (u_id, s_id, d_date) VALUES
@@ -562,5 +583,3 @@ INSERT INTO Débloquer (u_id, s_id, d_date) VALUES
 (33, 45, '2024-07-25 20:00:00'),
 (34, 46, '2024-08-05 21:00:00'),
 (35, 47, '2024-08-15 22:00:00');
-
-

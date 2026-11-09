@@ -89,24 +89,41 @@ INNER JOIN Evaluer E ON J.j_id = E.j_id
 GROUP BY J.j_id, J.j_titre
 ORDER BY note_moyenne DESC;
 
--- Cette requête permet d'identifier le succès le plus rarement débloqué pour chaque jeu.
--- Données recherchées : titre du jeu, nom du succès et nombre de joueurs ayant débloqué ce succès.
+	-- Cette requête permet d'identifier le succès le plus rarement débloqué pour chaque jeu.
+	-- Données recherchées : titre du jeu, nom du succès et nombre de joueurs ayant débloqué ce succès.
 
-SELECT titre, succes, nb_joueurs
-FROM (
-    SELECT J.j_titre AS titre,
-           S.s_nom AS succes,
-           COUNT(D.u_id) AS nb_joueurs,
-           ROW_NUMBER() OVER (
-               PARTITION BY J.j_id
-               ORDER BY COUNT(D.u_id) ASC, S.s_id ASC
-           ) AS classement
-    FROM Jeu J
-    INNER JOIN Succès S ON J.j_id = S.j_id
-    INNER JOIN Débloquer D ON S.s_id = D.s_id
-    GROUP BY J.j_id, S.s_id, J.j_titre, S.s_nom
-) AS classement_succes
-WHERE classement = 1;
- 
+	SELECT 
+		J.j_titre AS titre,
+		S.s_nom AS succes,
+		COUNT(D.u_id) AS nb_joueurs
+	FROM Jeu J
+	JOIN Succès S ON J.j_id = S.j_id
+	LEFT JOIN Débloquer D ON S.s_id = D.s_id
+	GROUP BY J.j_id, J.j_titre, S.s_id, S.s_nom
+	HAVING COUNT(D.u_id) = (
+		SELECT MIN(nb_deblocages)
+		FROM (
+			SELECT COUNT(D2.u_id) AS nb_deblocages
+			FROM Succès S2
+			LEFT JOIN Débloquer D2 ON S2.s_id = D2.s_id
+			WHERE S2.j_id = J.j_id
+			GROUP BY S2.s_id
+		) AS t
+	);
+
+	-- Cette requête permet d'obtenir liste des succès débloquer pour tous les joueurs
+    
+    SELECT 
+    u.u_pseudo, 
+    j.j_titre, 
+    s.s_nom AS succes_nom, 
+    s.s_desc AS succes_description, 
+    d.d_date
+FROM Débloquer d
+JOIN Utilisateur u ON d.u_id = u.u_id
+JOIN Succès s ON d.s_id = s.s_id
+JOIN Jeu j ON s.j_id = j.j_id
+ORDER BY u.u_id, d.d_date;
+
 
 
