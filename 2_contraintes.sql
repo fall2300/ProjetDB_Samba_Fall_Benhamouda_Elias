@@ -1,8 +1,5 @@
 USE magasin;
 
-
-USE magasin;
-
 ALTER TABLE Evaluer
 ADD CONSTRAINT chk_note
 CHECK (ev_note BETWEEN 1 AND 20);
@@ -20,7 +17,4 @@ ALTER TABLE Utilisateur
     MODIFY u_pays Varchar (50) DEFAULT "France";
     
 ALTER TABLE Editeur
-    MODIFY ed_pays Varchar (50) DEFAULT "France"; 
-
-    
-    
+    MODIFY ed_pays Varchar (50) DEFAULT "France";
