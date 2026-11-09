@@ -111,22 +111,34 @@ Un utilisateur souhaite consulter les jeux proposés sur la plateforme mais a un
 
 Un utilisateur souhaite consulter les jeux disponibles sur la plateforme en fonction de leur genre. Cette requête permet d'afficher le titre et la description de chaque jeu, ainsi que son genre, afin de faciliter la recherche d'un jeu correspondant à ses préférences.
 
-### Cas utilisation 3
 
-La plateforme souhaite connaître la répartition  de ses utilisateurs par pays afin d'identifier lesquels compte le plus de joueurs. Les résultats sont classés par ordre décroissant du nombre d'utilisateurs.
+### Cas d'utilisation 3 
+
+Un utilisateur souhaite consulter l'historique de ses commandes sur la plateforme. Cette fonctionnalité permet de retrouver les jeux qu'il a achetés, les dates auxquelles il a effectué ses commandes ainsi que le montant total de chaque commande. Cela lui permet de suivre ses achats et de conserver une trace de ses transactions.
 
 ### Cas utilisation 4
 
+La plateforme souhaite connaître la répartition  de ses utilisateurs par pays afin d'identifier lesquels compte le plus de joueurs. Les résultats sont classés par ordre décroissant du nombre d'utilisateurs.
+
+
+### Cas utilisation 5
+
 Un utilisateur souhaite consulter les jeux qu'il a ajoutés à sa liste de souhaits. Cette requête permet à la plateforme d'afficher les jeux associés à chaque utilisateur, en regroupant visuellement les résultats par pseudo et en triant les titres par ordre alphabétique.
-
-###  Cas utilisation 5
-
-La plateforme souhaite connaître la répartition des joueurs par pays pour chacun des jeux proposés. Cette requête permet d'identifier les pays comptant le plus de joueurs pour chaque jeu et de mieux comprendre sa popularité à l'international.
 
 ###  Cas utilisation 6
 
+La plateforme souhaite connaître la répartition des joueurs par pays pour chacun des jeux proposés. Cette requête permet d'identifier les pays comptant le plus de joueurs pour chaque jeu et de mieux comprendre sa popularité à l'international.
+
+###  Cas utilisation 7
+
 La plateforme souhaite permettre aux utilisateurs de consulter les notes moyennes attribuées aux différents jeux. Cette requête calcule la moyenne des évaluations pour chaque jeu et classe les résultats du mieux noté au moins bien noté. Cela peut ainsi aider les utilisateurs à choisir un jeu.
 
-### cas utilisation 7
+### Cas d'utilisation 8
+
+La plateforme souhaite connaître le niveau moyen de progression des joueurs dans les différents jeux. Cette requête permet de calculer le pourcentage moyen de succès débloqués par les joueurs possédant chaque jeu, y compris ceux qui n'ont encore débloqué aucun succès. Cela permet aux joueurs de comparer leur progression avec celle des autres joueurs.
+
+### cas utilisation 9
 
 La plateforme peut identifier les succès les plus difficiles à obtenir pour chaque jeu. Cette requête permet de déterminer le succès débloqué par le plus petit nombre de joueurs. En cas d'égalité, un seul succès est sélectionné. Cela permet aux joueurs de découvrir les succès les plus rares et de connaître leur niveau de rareté.
+
+

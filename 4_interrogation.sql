@@ -49,7 +49,8 @@ ORDER BY U.u_pseudo ASC, J.j_titre ASC;
 
 
 
-# Le nombre de joeur jouant à ce  jeux  par pays 
+-- Cette requête permet de connaître le nombre de joueurs possédant chaque jeu par pays.
+-- Données recherchées : titre du jeu, pays des utilisateurs et nombre de joueurs par pays.
 SELECT J.j_titre, U.u_pays,
        COUNT(U.u_id) AS nb_joueurs
 FROM Jeu J
@@ -58,8 +59,8 @@ INNER JOIN Utilisateur U ON P.u_id = U.u_id
 GROUP BY J.j_id, J.j_titre, U.u_pays
 ORDER BY nb_joueurs DESC;
 
--- Cette requête permet de connaître le nombre de joueurs possédant chaque jeu par pays.
--- Données recherchées : titre du jeu, pays des utilisateurs et nombre de joueurs par pays.
+-- Cette requête permet de calculer le pourcentage moyen de succès débloqués par les joueurs pour chaque jeu.
+-- Données recherchées : titre du jeu et pourcentage moyen de succès débloqués par les joue
 
 SELECT J.j_titre,
      ROUND(AVG(
