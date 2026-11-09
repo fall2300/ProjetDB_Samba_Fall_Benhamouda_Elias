@@ -103,17 +103,29 @@ gestion et le dictionnaire de données.
 ## MLD
 
 Utilisateur = (u_id INT, u_pseudo VARCHAR(50), u_email VARCHAR(100), u_mdp VARCHAR(255), u_date_inscription DATE, u_pays VARCHAR(50), u_statut_connexion VARCHAR(20));
+
 Editeur = (ed_id INT, ed_nom VARCHAR(100), ed_pays VARCHAR(50));
+
 Commande = (c_id INT, c_date_heure DATETIME, c_prix_total REAL, c_mode_paiement VARCHAR(50), #u_id);
+
 Jeu = (j_id INT, j_titre VARCHAR(150), j_description VARCHAR(2000), j_prix REAL, j_date_sortie DATE);
+
 Genre = (g_id INT, g_nom VARCHAR(50));
+
 Succès = (s_id INT, s_nom VARCHAR(100), s_desc VARCHAR(250), #j_id);
+
 Posséder = (#u_id, #j_id, date_acquisition_jeu DATE, drm VARCHAR(50), tps_jeu REAL);
+
 Editer = (#ed_id, #j_id);
+
 Catégoriser = (#j_id, #g_id);
+
 Evaluer = (#u_id, #j_id, ev_note INT, ev_review VARCHAR(1000), ev_date DATE);
+
 Composer = (#c_id, #j_id);
+
 Liste_de_souhaits = (#u_id, #j_id, w_date DATE);
+
 Débloquer = (#u_id, #s_id, d_date DATETIME);
 
 ## Scénario d'utilisation
