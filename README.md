@@ -156,19 +156,41 @@ Un utilisateur souhaite consulter les jeux qu'il a ajoutés à sa liste de souha
 
 La plateforme souhaite connaître la répartition des joueurs par pays pour chacun des jeux proposés. Cette requête permet d'identifier les pays comptant le plus de joueurs pour chaque jeu et de mieux comprendre sa popularité à l'international.
 
-###  Cas utilisation 7
-
-La plateforme souhaite permettre aux utilisateurs de consulter les notes moyennes attribuées aux différents jeux. Cette requête calcule la moyenne des évaluations pour chaque jeu et classe les résultats du mieux noté au moins bien noté. Cela peut ainsi aider les utilisateurs à choisir un jeu.
-
-### Cas d'utilisation 8
+### Cas d'utilisation 7
 
 La plateforme souhaite connaître le niveau moyen de progression des joueurs dans les différents jeux. Cette requête permet de calculer le pourcentage moyen de succès débloqués par les joueurs possédant chaque jeu, y compris ceux qui n'ont encore débloqué aucun succès. Cela permet aux joueurs de comparer leur progression avec celle des autres joueurs.
 
-### cas utilisation 9
+###  Cas utilisation 8
+
+La plateforme souhaite permettre aux utilisateurs de consulter les notes moyennes attribuées aux différents jeux. Cette requête calcule la moyenne des évaluations pour chaque jeu et classe les résultats du mieux noté au moins bien noté. Cela peut ainsi aider les utilisateurs à choisir un jeu.
+
+### Cas d'utilisation 9
 
 La plateforme peut identifier les succès les plus difficiles à obtenir pour chaque jeu. Cette requête permet de déterminer le succès débloqué par le plus petit nombre de joueurs. En cas d'égalité, un seul succès est sélectionné. Cela permet aux joueurs de découvrir les succès les plus rares et de connaître leur niveau de rareté.
 
+### Cas d'utilisation 10
 
+La plateforme souhaite connaître la liste des succès débloquer par les joueurs pour pouvoir l'afficher dans les pages des jeux correspondants dans la bibliothèque de l'utilisateur.
+
+### Cas d'utilisation 11
+
+La plateforme souhaite ajouter un onglet "Meilleures ventes" sur le site du magasin où les jeux disponible sont triées par nombre de ventes décroissant.
+
+### Cas d'utilisation 12
+
+Les éditeur souhaite connaître leurs chiffres de ventes et plus particulièrement leur jeu le plus vendu de la plateforme pour pouvoir le mettre en avant de leur côté pour fédérer leur communauté.
+
+### Cas d'utilisateur 13
+
+La plateforme cherche à concentrer ces publicités par mail à ceux qui  n'ont pas encore effectuer leur premier achat pour les pousser à prendre en main l'écosystème.
+
+### cas d'utilisateur 14
+
+La plateforme cherche à mettre en avant ces invendus par le biais d'un évenement spécial, elle récupère donc les jeux n'ayant pas encore d'évaluation pour essayer de les vendre.
+
+### Cas d'utilisation 15
+
+Les éditeurs cherchent à obtenir des statistiques de temps de jeu pour leur bilan stratégique, la plateforme leur met donc à disposition les moyennes des temps de jeu de leurs titres.
 
 ### Analyse exécution : 
 
